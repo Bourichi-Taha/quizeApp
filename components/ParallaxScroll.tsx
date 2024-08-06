@@ -1,12 +1,5 @@
 import type { PropsWithChildren, ReactElement } from "react";
-import {
-  StyleSheet,
-  useColorScheme,
-  TouchableOpacity,
-  Image,
-  View,
-  Text,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, Image, View, Text } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -28,13 +21,11 @@ export default function ParallaxScroll({
   headerImage,
   headerBackgroundColor,
 }: Props) {
-  const colorScheme = useColorScheme() ?? "light";
+  const colorScheme = "light";
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
-  const blurTint = colorScheme === "dark" ? "dark" : "light";
-  const color =
-    colorScheme === "dark" ? "rgba(0, 0, 0, .85)" : "rgba(255, 255, 255, .85)";
-  const themedTintColor = colorScheme === "dark" ? "white" : "black";
+  const blurTint = "light";
+  const themedTintColor = "black";
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {

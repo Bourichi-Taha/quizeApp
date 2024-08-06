@@ -5,8 +5,6 @@
 
 const activeTintColorLight = "#FFFFFF";
 const inactiveTintColorLight = "#999999";
-const activeTintColorDark = "#FFFFFF";
-const inactiveTintColorDark = "#999999";
 
 export const Colors = {
   light: {
@@ -18,15 +16,5 @@ export const Colors = {
     tabIconDefault: "#999999",
     tabIconSelected: activeTintColorLight,
     tabIconNotSelected: inactiveTintColorLight,
-  },
-  dark: {
-    text: "#ECEDEE",
-    background: "#222222",
-    activeTint: activeTintColorDark,
-    inactiveTint: inactiveTintColorDark,
-    icon: "#999999",
-    tabIconDefault: "#999999",
-    tabIconSelected: activeTintColorDark,
-    tabIconNotSelected: inactiveTintColorDark,
   },
 };

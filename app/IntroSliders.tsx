@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import { useNavigation } from "@react-navigation/native";
@@ -22,31 +23,9 @@ const shuffleArray = (array) => {
 };
 
 const getRandomImages = () => {
-  const shuffledCarousel = shuffleArray([...metaData.carousel]);
+  const shuffledCarousel = shuffleArray([...metaData.sliders]);
   return shuffledCarousel.slice(0, 3).map((imageKey) => images[imageKey]);
 };
-
-/* const slides = [
-  {
-    key: "one",
-    title: "Explore Diverse Categories",
-    text: "Browse through a wide range of categories \n tailored to your style.",
-    image: images[metaData.carousel[0]],
-  },
-  {
-    key: "two",
-    title: "High-Quality Images",
-    text: "Enjoy high-definition wallpapers designed \nto enhance your screen.",
-    image: images[metaData.carousel[1]],
-  },
-  {
-    key: "three",
-    title: "Get Started",
-    text: "Enjoy high-definition wallpapers designed \nto enhance your screen.",
-    image: images[metaData.carousel[2]],
-  },
-];
- */
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -54,6 +33,7 @@ const windowWidth = Dimensions.get("window").width;
 const SlidersScreen = () => {
   const [showRealApp, setShowRealApp] = useState(false);
   const [slides, setSlides] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -93,22 +73,13 @@ const SlidersScreen = () => {
 
   const _renderNextButton = () => {
     return (
-      <View style={styles.optionButton}>
-        <LinearGradient
-          colors={["#FE6292", "#E57373"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.optionButton}
-        >
+      <View style={styles.optionButtonContainer}>
+        <View style={styles.optionButton}>
           <Image
-            source={require("../assets/images/icons/icons8-arrow-100(1).png")}
-            style={{
-              width: 50,
-              height: 50,
-              tintColor: "white",
-            }}
+            source={require("../assets/images/next.png")}
+            style={styles.nextIcon}
           />
-        </LinearGradient>
+        </View>
       </View>
     );
   };
@@ -116,7 +87,7 @@ const SlidersScreen = () => {
   const _renderDoneButton = () => {
     return (
       <TouchableOpacity
-        style={styles.optionButton}
+        style={styles.optionButtonContainer}
         onPress={() =>
           navigation.reset({
             index: 0,
@@ -124,52 +95,28 @@ const SlidersScreen = () => {
           })
         }
       >
-        <LinearGradient
-          colors={["#FE6292", "#E57373"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.optionButton}
-        >
+        <View style={styles.optionButton}>
           <Image
-            source={require("../assets/images/icons/icons8-done-100.png")}
-            style={{
-              width: 50,
-              height: 50,
-              tintColor: "white",
-            }}
+            source={require("../assets/images/next.png")}
+            style={styles.nextIcon}
           />
-        </LinearGradient>
+        </View>
       </TouchableOpacity>
     );
   };
 
-  const _renderSkipButton = () => {
+  const _renderPrevButton = () => {
     return (
-      <TouchableOpacity
-        style={styles.optionButton}
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "TabLayout" }],
-          })
-        }
-      >
+      <View style={styles.prevButton}>
         <LinearGradient
-          colors={["#FE6292", "#E57373"]}
+          colors={["#BBBBBB", "#BBBBBB"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={styles.optionButton}
+          style={styles.prevButton}
         >
-          <Image
-            source={require("../assets/images/icons/icons8-skip-100.png")}
-            style={{
-              width: 40,
-              height: 40,
-              tintColor: "white",
-            }}
-          />
+          <Text style={styles.prevText}>Back</Text>
         </LinearGradient>
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -181,6 +128,10 @@ const SlidersScreen = () => {
     setShowRealApp(true);
   };
 
+  const handleSlideChange = (index) => {
+    setCurrentIndex(index);
+  };
+
   if (showRealApp) {
     return navigation.navigate("TabLayout");
   } else {
@@ -190,11 +141,21 @@ const SlidersScreen = () => {
         data={slides}
         renderDoneButton={_renderDoneButton}
         renderNextButton={_renderNextButton}
-        renderSkipButton={_renderSkipButton}
-        showSkipButton={true}
+        bottomButton
         onDone={onDoneAllSlides}
-        onSkip={onSkipSlides}
-        activeDotStyle={{ backgroundColor: "#FE6292" }}
+        onSlideChange={handleSlideChange}
+        activeDotStyle={{
+          backgroundColor: "#FF9F98",
+          width: 40,
+          height: 8,
+          bottom: 150,
+        }}
+        dotStyle={{
+          backgroundColor: "#BBBBBB",
+          bottom: 150,
+          width: 8,
+          height: 8,
+        }}
       />
     );
   }
@@ -202,26 +163,29 @@ const SlidersScreen = () => {
 
 const styles = StyleSheet.create({
   slide: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
+    height: windowHeight,
   },
   title: {
     marginTop: 10,
-    fontSize: 24,
+    fontSize: 30,
     fontFamily: "Beiruti",
+    bottom: 20,
+    color: "#27224B",
   },
   text: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "Beiruti",
-    color: "gray",
+    color: "#75718E",
     marginBottom: 100,
   },
   image: {
     width: windowWidth,
-    height: windowHeight * 0.8,
+    height: windowHeight * 0.7,
+    top: -70,
   },
   buttonCircle: {
     width: 40,
@@ -234,9 +198,52 @@ const styles = StyleSheet.create({
   skipText: {
     color: "white",
   },
+  prevText: {
+    fontSize: 16,
+    color: "white",
+  },
+  optionButtonContainer: {
+    borderRadius: 50,
+    width: 70,
+    height: 70,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 159, 152, 0.2)",
+    alignSelf: "center",
+  },
   optionButton: {
     borderRadius: 50,
-    width: 50,
+    width: 60.51,
+    height: 60.51,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FF9F98",
+    alignSelf: "center",
+  },
+  nextIcon: {
+    width: 27,
+    height: 27,
+    transform: [{ rotate: "90deg" }],
+    tintColor: "white",
+  },
+  firstOptionButton: {
+    borderRadius: 50,
+    width: 300,
+    height: 50,
+    alignItems: "center",
+    ...Platform.select({
+      ios: {
+        right: 115,
+      },
+      android: {
+        right: 145,
+      },
+    }),
+    justifyContent: "center",
+  },
+  prevButton: {
+    borderRadius: 50,
+    width: 100,
     height: 50,
     alignItems: "center",
     justifyContent: "center",

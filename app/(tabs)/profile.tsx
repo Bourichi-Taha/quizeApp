@@ -8,18 +8,10 @@ import {
   View,
 } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import React, {
-  useRef,
-  useCallback,
-  useMemo,
-  useState,
-  useEffect,
-} from "react";
+import React, { useRef, useCallback, useMemo, useState } from "react";
 import Rate from "react-native-rate";
 import { LinearGradient } from "expo-linear-gradient";
-import { BlurView } from "expo-blur";
 import {
   BottomSheetModal,
   BottomSheetView,
@@ -30,23 +22,12 @@ import {
 import type { BottomSheetDefaultBackdropProps } from "../../node_modules/@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 import WebView from "react-native-webview";
 import Constants from "expo-constants";
-import * as WebBrowser from "expo-web-browser";
-/* import * as Google from "expo-auth-session/providers/google";
- */ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Linking from "expo-linking";
-/* import { AdMobBanner } from "expo-ads-admob";
- */
-/* import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-} from "react-native-google-mobile-ads"; */
 import { images } from "../../utils/index";
 import metaData from "../../db.json";
+import { Link, useNavigation } from "expo-router";
 /* import InlineAd from "@/components/InlineAd"; */
 
-/* WebBrowser.maybeCompleteAuthSession();
- */
 export default function HomeScreen() {
   const rateModalRef = useRef<BottomSheetModal>(null);
   const contactModalRef = useRef<BottomSheetModal>(null);
@@ -60,18 +41,10 @@ export default function HomeScreen() {
   const snapPointsFourth = useMemo(() => ["50%", "90%"], []);
   const snapPointsFifth = useMemo(() => ["50%", "90%"], []);
 
-  const colorScheme = useColorScheme();
-  const color = colorScheme === "dark" ? "white" : "black";
-  const themedSheetColor = colorScheme === "dark" ? "#232323" : "white";
-  const themedHandleStyle = colorScheme === "dark" ? "#474747" : "#404040";
-  const themedCursorStyle = colorScheme === "dark" ? "#474747" : "#404040";
-
-  /* const [userInfo, setUserInfo] = useState<{ picture?: string } | null>(null);
-  const [isSignedIn, setIsSignedIn] = useState(false); */
-
-  /* const adUnitId = __DEV__
-    ? TestIds.ADAPTIVE_BANNER
-    : "ca-app-pub-3940256099942544/2435281174"; */
+  const color = "black";
+  const themedSheetColor = "white";
+  const themedHandleStyle = "#404040";
+  const themedCursorStyle = "#404040";
 
   const getRedirectUri = () => {
     if (Constants.platform && Constants.platform.ios) {
@@ -91,70 +64,6 @@ export default function HomeScreen() {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
 
-  /* const [request, response, promptAsync] = Google.useAuthRequest({
-    iosClientId:
-      "146135389195-jdm7rqvl81ls8va9hb0jippsdghpoiog.apps.googleusercontent.com",
-    androidClientId:
-      "146135389195-as37vq11murmf986p54t8er3kh3hpfv4.apps.googleusercontent.com",
-    webClientId:
-      "146135389195-qtphvosnanndgi3ukn8n9haslpbd4d9t.apps.googleusercontent.com",
-    scopes: ["profile", "email"],
-    redirectUri,
-  });
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      if (response?.type === "success") {
-        try {
-          const authentication = response.authentication;
-          if (!authentication) {
-            throw new Error("Authentication object not found");
-          }
-          const accessToken = authentication.accessToken;
-          const user = await getUserInfo(accessToken);
-          setUserInfo(user);
-          setIsSignedIn(true);
-          await AsyncStorage.setItem("@user", JSON.stringify(user));
-        } catch (error) {
-          console.error("Error fetching user info:", error);
-        }
-      }
-    };
-
-    fetchUserInfo();
-  }, [response]);
-
-  const getUserInfo = async (accessToken: string) => {
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const user = await response.json();
-      return user;
-    } catch (error) {
-      console.error("Error fetching user info:", error);
-      throw error;
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await AsyncStorage.removeItem("@user");
-      setUserInfo(null);
-      setIsSignedIn(false);
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
- */
   const handleRateStart = useCallback(() => {
     rateModalRef.current?.present();
   }, []);
@@ -248,10 +157,12 @@ export default function HomeScreen() {
     []
   );
 
+  const navigation = useNavigation();
+
   return (
     <GestureHandlerRootView>
       <ParallaxScrollView
-        headerBackgroundColor={{ light: "white", dark: "#222222" }}
+        headerBackgroundColor={{ light: "white", dark: "white" }}
         headerImage={
           <Image
             source={require("@/assets/images/partial-react-logo.png")}
@@ -259,6 +170,7 @@ export default function HomeScreen() {
           />
         }
       >
+        {/*     <InlineAd /> */}
         <View style={styles.profileSection}>
           <View style={styles.profileImageSection}>
             <Image
@@ -274,15 +186,6 @@ export default function HomeScreen() {
             <Text style={styles.googleButtonText}>{metaData.app_name}</Text>
           </View>
         </View>
-        {/*        <InlineAd/> */}
-        {/*         <View>
-         */}
-        {/* <BannerAd
-            ref={bannerRef}
-            unitId={adUnitId}
-            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          /> */}
-        {/* </View> */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Support us</Text>
           <TouchableOpacity
@@ -320,7 +223,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About</Text>
+          <Text style={styles.sectionTitle}>About the app</Text>
           <TouchableOpacity
             style={styles.sectionItem}
             onPress={handleAboutStart}
@@ -357,7 +260,8 @@ export default function HomeScreen() {
               Privacy Policy
             </Text>
           </TouchableOpacity>
-
+        </View>
+        <View style={styles.lastSection}>
           <View style={styles.sectionCopyright}>
             <Text style={[styles.sectionCopyrightText, { color: color }]}>
               Generated by Mobtwin
@@ -596,7 +500,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "black",
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
     fontSize: 18,
   },
   settingsIcon: {
@@ -623,8 +527,8 @@ const styles = StyleSheet.create({
     tintColor: "white",
   },
   googleButtonText: {
-    fontSize: 26,
-    fontFamily: "Beiruti",
+    fontSize: 18,
+    fontFamily: "MuseoBold",
     marginLeft: 8,
     textAlign: "center",
     alignSelf: "center",
@@ -648,10 +552,13 @@ const styles = StyleSheet.create({
   section: {
     padding: 5,
   },
+  lastSection: {
+    padding: 5,
+  },
   sectionTitle: {
     color: "#818181",
-    fontSize: 15,
-    fontFamily: "Beiruti",
+    fontSize: 16,
+    fontFamily: "MuseoBold",
     marginBottom: 15,
   },
   sectionItem: {
@@ -665,7 +572,7 @@ const styles = StyleSheet.create({
   },
   sectionItemText: {
     color: "black",
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "Beiruti",
     marginLeft: 20,
     flex: 1,
@@ -679,12 +586,12 @@ const styles = StyleSheet.create({
   sectionCopyrightText: {
     color: "black",
     textAlign: "center",
-    fontSize: 13,
+    fontSize: 16,
     fontFamily: "Beiruti",
     flex: 1,
   },
   generatorText: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: "Beiruti",
     color: "white",
   },
@@ -721,20 +628,20 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 35,
     marginTop: 20,
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
     textAlign: "center",
   },
   subTitleText: {
     color: "rgba(0,0,0,0.5)",
     fontSize: 30,
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
     marginBottom: 12,
     textAlign: "center",
   },
   cuteText: {
     color: "rgba(0,0,0,0.5)",
     fontSize: 18,
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
     textAlign: "center",
   },
   buttonsContainer: {
@@ -756,7 +663,7 @@ const styles = StyleSheet.create({
   },
   optionButton: {
     backgroundColor: "transparent",
-    borderRadius: 11,
+    borderRadius: 50,
     width: "100%",
     height: 100,
     alignItems: "center",
@@ -767,14 +674,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
     color: "white",
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
   },
   feedbackText: {
     fontSize: 22,
     marginTop: 10,
     marginBottom: 20,
     textAlign: "center",
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
   },
   input: {
     width: "90%",
@@ -807,6 +714,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     justifyContent: "center",
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
+  },
+  cancel: {
+    width: 40,
+    height: 40,
+    marginLeft: 350,
+    marginTop: -20,
   },
 });

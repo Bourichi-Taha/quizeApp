@@ -1,22 +1,58 @@
 {
-  "app_name": "My app",
+  "app_name": "Quiz Game",
   "icon_url": "icon1",
-  "categories": [
+  "quizQuestions": [
     {
-      "category": "Standard",
-      "icon": "categoryIcon1",
-      "images": ["wallpaper1", "wallpaper2", "wallpaper3"]
+      "question": "This is example of a simple quiz question 1..",
+      "options": [
+        "Answer example 1",
+        "Answer example 2",
+        "Answer example 3",
+        "Answer example 4"
+      ],
+      "correct_option": "Answer example 1"
     },
     {
-      "category": "Games",
-      "icon": "categoryIcon2",
-      "images": ["wallpaper4", "wallpaper5", "wallpaper6"]
+      "question": "This is example of a simple quiz question 2..",
+      "options": [
+        "Answer example 1",
+        "Answer example 2",
+        "Answer example 3",
+        "Answer example 4"
+      ],
+      "correct_option": "Answer example 1"
     },
     {
-      "category": "Animals",
-      "icon": "categoryIcon3",
-      "images": ["wallpaper7", "wallpaper8", "wallpaper9"]
+      "question": "This is example of a simple quiz question 3..",
+      "options": [
+        "Answer example 1",
+        "Answer example 2",
+        "Answer example 3",
+        "Answer example 4"
+      ],
+      "correct_option": "Answer example 1"
+    },
+    {
+      "question": "This is example of a simple quiz question 4..",
+      "options": [
+        "Answer example 1",
+        "Answer example 2",
+        "Answer example 3",
+        "Answer example 4"
+      ],
+      "correct_option": "Answer example 1"
+    },
+    {
+      "question": "This is example of a simple quiz question 5..",
+      "options": [
+        "Answer example 1",
+        "Answer example 2",
+        "Answer example 3",
+        "Answer example 4"
+      ],
+      "correct_option": "Answer example 1"
     }
   ],
-  "carousel": ["pinned1", "pinned2", "pinned3"]
+  "sliders": ["categoryIcon1", "categoryIcon1", "categoryIcon1"],
+  "loader": "loader"
 }

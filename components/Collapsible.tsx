@@ -1,12 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { PropsWithChildren, useState } from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-  Text,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 import { Colors } from "@/constants/Colors";
 
@@ -15,7 +9,7 @@ export function Collapsible({
   title,
 }: PropsWithChildren & { title: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const theme = useColorScheme() ?? "light";
+  const theme = "light";
 
   return (
     <View>
@@ -27,7 +21,7 @@ export function Collapsible({
         <Ionicons
           name={isOpen ? "chevron-down" : "chevron-forward-outline"}
           size={18}
-          color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
+          color={theme === "light" ? Colors.light.icon : Colors.light.icon}
         />
         <Text type="defaultSemiBold">{title}</Text>
       </TouchableOpacity>

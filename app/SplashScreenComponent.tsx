@@ -8,7 +8,7 @@ const SplashScreen = ({ navigation }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace("IntroSliders");
+      navigation.replace("LoadingScreen");
     }, 5000);
     return () => clearTimeout(timer);
   }, [navigation]);
@@ -92,6 +92,7 @@ const SplashScreen = ({ navigation }) => {
                   fontSize: 18,
                   fontFamily: "Beiruti",
                   color: "white",
+                  textAlign: "center",
                 }}
               >
                 AI Builder

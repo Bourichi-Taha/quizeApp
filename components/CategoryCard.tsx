@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useColorScheme } from "@/hooks/useColorScheme";
 
 interface CategoryCardProps {
   title: string;
@@ -43,11 +42,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     },
   });
 
-  const colorScheme = useColorScheme();
-  const gradientColors =
-    colorScheme === "dark"
-      ? ["rgba(255,255,255,1)", "rgba(255,255,255,0)"]
-      : ["rgba(0,0,0,1)", "rgba(0,0,0,0)", "rgba(0,0,0,0)"];
+  const gradientColors = ["rgba(0,0,0,1)", "rgba(0,0,0,0)", "rgba(0,0,0,0)"];
 
   return (
     <TouchableOpacity style={[styles.card, shadowStyle]} onPress={onPress}>
@@ -56,25 +51,24 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         style={styles.cardImage}
         resizeMode="cover"
       />
-      <LinearGradient
-        colors={gradientColors}
-        locations={[0, 0.35, 1]}
-        start={{ x: 0, y: 0.75 }}
-        end={{ x: 1, y: 0.25 }}
-        style={styles.overlayContainer}
-      >
-        <Text style={styles.cardTitle}>{title}</Text>
-      </LinearGradient>
+      <View style={styles.textsView}>
+        <Text style={styles.cardTitle}>Chapter 1</Text>
+        <Text style={styles.cardDescription}>Fancomic Rayman Nightmarish</Text>
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  textsView: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   card: {
     borderRadius: 20,
     marginBottom: 10,
     width: "94%",
-    backgroundColor: "#000000",
     height: 210,
     overflow: "hidden",
   },
@@ -93,27 +87,22 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   cardTitle: {
-    width: "50%",
-    color: "rgba(255,255,255,.8)",
-    fontSize: 35,
-    fontFamily: "Rancho",
+    color: "rgba(255,255,255,.5)",
+    fontSize: 22,
     position: "absolute",
-    top: 60,
-    left: 20,
+    fontFamily: "MuseoBold",
+    marginBottom: 10,
     zIndex: 1,
-    height: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    lineHeight: 45,
+    bottom: 100,
+    paddingHorizontal: 10,
   },
   cardDescription: {
-    fontSize: 25,
-    fontFamily: "Rancho",
-    color: "#555555",
-    lineHeight: 16,
+    fontSize: 18,
+    fontFamily: "MuseoBold",
+    color: "white",
     position: "absolute",
-    bottom: 40,
-    left: 20,
+    bottom: 80,
+    paddingHorizontal: 10,
     zIndex: 1,
   },
 });

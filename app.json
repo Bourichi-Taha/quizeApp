@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "WeaverTheme",
+    "scheme": "weaver",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.AIWolves.WeaverTheme",
+      "bundleIdentifier": "com.AIWolves.weaver",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Enable Camera Roll Access so that you can select Other Videos from Camera Roll",
         "CFBundleURLTypes": [
@@ -24,21 +24,15 @@
             ]
           }
         ]
-      },
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~1458002511"
       }
     },
     "android": {
       "adaptiveIcon": {
-        "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~1458002511"
-      },
-      "package": "com.AIWolves.WeaverTheme"
+      "package": "com.AIWolves.weaver",
+      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "bundler": "metro",
@@ -68,20 +62,7 @@
           }
         }
       ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-3940256099942544~1458002511",
-          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
-        }
-      ],
-      [
-        "expo-tracking-transparency",
-        {
-          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
-        }
-      ],
-      "@react-native-firebase/app"
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

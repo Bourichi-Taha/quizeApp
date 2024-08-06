@@ -7,20 +7,16 @@ import { View, Image } from "react-native";
 
 const iconUrls = {
   home: {
-    active: require("../../assets/images/icons/icons8-home-100.png"),
-    inactive: require("../../assets/images/icons/icons8-home-100.png"),
+    active: require("../../assets/images/icons/icons8-home-filled-100.png"),
+    inactive: require("../../assets/images/icons/icons8-home-outlined-100.png"),
   },
-  bookmark: {
-    active: require("../../assets/images/icons/icons8-favorite-100.png"),
-    inactive: require("../../assets/images/icons/icons8-favorite-100.png"),
-  },
-  colorFilter: {
-    active: require("../../assets/images/icons/icons8-themes-100.png"),
-    inactive: require("../../assets/images/icons/icons8-themes-100.png"),
+  questionMark: {
+    active: require("../../assets/images/icons/icons8-question-filled-100.png"),
+    inactive: require("../../assets/images/icons/icons8-question-outlined-100.png"),
   },
   person: {
-    active: require("../../assets/images/icons/icons8-account-100.png"),
-    inactive: require("../../assets/images/icons/icons8-account-100.png"),
+    active: require("../../assets/images/icons/icons8-user-filled-100.png"),
+    inactive: require("../../assets/images/icons/icons8-user-outlined-100.png"),
   },
 };
 

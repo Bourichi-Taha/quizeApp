@@ -96,4 +96,5 @@ jobs:
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/Bourichi-Taha/quizeApp.git apks
+          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/Bourichi-Taha/quizeApp.git
+          git push origin apks

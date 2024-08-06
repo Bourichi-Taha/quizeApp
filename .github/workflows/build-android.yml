@@ -76,24 +76,24 @@ jobs:
           path: android/app/build/outputs/apk/release/app-release.apk
 
 
-    - name: Configure Git
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
 
-    - name: Create APK directory
-      run: |
-        git checkout -b apks # Ensure we're on a new branch
-        mkdir -p ./apks # Create the directory if it doesn't exist
-        cp android/app/build/outputs/apk/release/app-release.apk ./apks/app-release-$(date +'%Y%m%d%H%M%S').apk
+      - name: Create APK directory
+        run: |
+          git checkout -b apks # Ensure we're on a new branch
+          mkdir -p ./apks # Create the directory if it doesn't exist
+          cp android/app/build/outputs/apk/release/app-release.apk ./apks/app-release-$(date +'%Y%m%d%H%M%S').apk
 
-    - name: Commit APK
-      run: |
-        git add ./apks/
-        git commit -m "Add APK from build $GITHUB_RUN_ID"
+      - name: Commit APK
+        run: |
+          git add ./apks/
+          git commit -m "Add APK from build $GITHUB_RUN_ID"
 
-    - name: Push APK
-      env:
-        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-      run: |
-        git push https://x-access-token:${PAT_TOKEN}@github.com/Bourichi-Taha/quizeApp apks
+      - name: Push APK
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git push https://x-access-token:${PAT_TOKEN}@github.com/Bourichi-Taha/quizeApp apks

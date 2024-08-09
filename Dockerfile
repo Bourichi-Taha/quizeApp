@@ -2,6 +2,6 @@ FROM alpine
 
 WORKDIR /app
 
-COPY android/app/build/outputs/apk/release/app-release.apk /app/app-release.apk
+COPY android/app/build/outputs /app/outputs
 
 CMD ["tail", "-f", "/dev/null"]

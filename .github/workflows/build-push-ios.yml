@@ -1,0 +1,90 @@
+name: Build and Push iOS Artifact to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cache Yarn
+        id: yarn-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.yarn/cache
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Expo Prebuild
+        run: npx expo prebuild --platform ios --no-install
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v2
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Install CocoaPods 
+        run: |
+          cd ios
+          pod install
+
+      - name: Upload app as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios_app_artifact
+          path: ios/WeaverTheme.xcworkspace
+
+  build_and_push_docker:
+    runs-on: ubuntu-latest
+    needs: build_ios
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download iOS App artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ios_app_artifact
+          path: ios/archive/cicd.app
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ios_docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/reactnative:quiz_ios
+
+      - name: Logout from Docker Hub
+        run: docker logout

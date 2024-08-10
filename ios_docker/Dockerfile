@@ -5,7 +5,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Copy the iOS build artifact into the Docker image
-COPY ../ios/WeaverTheme.xcworkspace /app/ios/WeaverTheme.xcworkspace 
+COPY ../ios /app/ios 
 
 # Add any additional setup or configuration as needed
 CMD ["tail", "-f", "/dev/null"]

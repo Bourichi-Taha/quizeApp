@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ios_app_artifact
-          path: ios/WeaverTheme.xcworkspace
+          path: ios
 
   build_and_push_docker:
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ios_app_artifact
-          path: ios/WeaverTheme.xcworkspace
+          path: ios
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

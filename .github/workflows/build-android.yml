@@ -3,7 +3,7 @@ name: Build and Save to repo
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:

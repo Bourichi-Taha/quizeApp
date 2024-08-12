@@ -103,7 +103,7 @@ jobs:
         run: zip -r outputs_app.zip android/app/build/outputs
 
       - name: Transfer to server
-        run: scp outputs_app.zip root@server:/var/www/user_mobtwin/generated/userId/appId/android
+        run: scp outputs_app.zip root@100.42.182.147:/var/www/user_mobtwin/generated/userId/appId/android
       # - name: Archive AAB
       #   uses: actions/upload-artifact@v3
       #   with:

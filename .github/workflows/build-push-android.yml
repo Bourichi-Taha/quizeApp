@@ -4,7 +4,7 @@ on:
   push:
     branches:
     # change later to main
-      - master
+      - main
 
 jobs:
   build:
@@ -99,6 +99,11 @@ jobs:
         run: |
           cd android
           ./run_gradlew.sh assembleReleaseBoth
+      - name: Move generated files to root dir
+        run: |
+          mv android/app/build/outputs/apk/release/app-arm64-v8a-release.apk ./
+          mv android/app/build/outputs/bundle/release/app-release.aab ./
+          mv android/app/my-upload-key.keystore ./
       - name: Create user folder if not exists
         uses: appleboy/ssh-action@master
         with:
@@ -114,9 +119,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "android/app/build/outputs/apk/release/app-arm64-v8a-release.apk"
+          source: "app-arm64-v8a-release.apk"
           target: "/var/www/user_mobtwin/generated/userId/appId/android"
-          strip_components: 7
       - name: Transfer aab to server
         uses: appleboy/scp-action@master
         with:
@@ -124,9 +128,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "android/app/build/outputs/bundle/release/app-release.aab"
+          source: "app-release.aab"
           target: "/var/www/user_mobtwin/generated/userId/appId/android"
-          strip_components: 7
       - name: Transfer keystore to server
         uses: appleboy/scp-action@master
         with:
@@ -134,9 +137,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "android/app/my-upload-key.keystore"
+          source: "my-upload-key.keystore"
           target: "/var/www/user_mobtwin/generated/userId/appId/android"
-          strip_components: 3
       # - name: Archive AAB  
       #   uses: actions/upload-artifact@v3
       #   with:

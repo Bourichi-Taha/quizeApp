@@ -49,6 +49,21 @@ jobs:
           pod install
       - name: Zip iOS folder
         run: zip -r ios_app.zip ios
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios_app
+          path: ios_app.zip
+  transfer_to_server:
+    needs: build_ios
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ios_app
+          path: ios_app.zip
       - name: Create user folder if not exists
         uses: appleboy/ssh-action@master
         with:
@@ -65,5 +80,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "ios_app.zip"
-          target: "/var/www/user_mobtwin/generated/userId/appId/ios/"
+          target: "/var/www/user_mobtwin/generated/userId/appId/ios"
 

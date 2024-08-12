@@ -3,7 +3,7 @@ name: Build and Save to repo
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -69,27 +69,8 @@ jobs:
           cd android
           ./run_gradlew.sh assembleRelease
 
-      - name: Archive APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-release.apk 
-          path: android/app/build/outputs/apk/release/app-release.apk
+      - name: Zip outputs folder
+        run: zip -r outputs_app.zip android/app/build/outputs
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/reactnative:unsigned_ios_only_archive
-
-      - name: Logout from Docker Hub
-        run: docker logout
+      - name: Transfer to server
+        run: scp outputs_app.zip root@server:/var/www/user_mobtwin/generated/userId/appId/android

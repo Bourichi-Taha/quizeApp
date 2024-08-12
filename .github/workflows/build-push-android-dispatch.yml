@@ -17,8 +17,7 @@ jobs:
           node-version: 18
       - name: Print the variables
         run: |
-          echo "Variable 1: ${{ github.event.client_payload.var1 }}"
-          echo "Variable 2: ${{ github.event.client_payload.var2 }}"
+          echo "Variable 1: ${{ github.event.client_payload.app }}"
 
       # Restore cache before installing dependencies
       - name: Cache Node.js modules

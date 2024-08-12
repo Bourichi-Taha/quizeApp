@@ -81,8 +81,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "./ios_app/ios_app.zip,"
+          source: "ios_app/ios_app.zip"
           target: "/var/www/user_mobtwin/generated/userId/appId/ios"
-          strip_components: 1
+          strip_components: 2
 
 

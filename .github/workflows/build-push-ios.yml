@@ -64,6 +64,8 @@ jobs:
         with:
           name: ios_app
           path: ios_app
+      - name: List Files in Directory
+        run: ls -l ./ios_app/
       - name: Create user folder if not exists
         uses: appleboy/ssh-action@master
         with:

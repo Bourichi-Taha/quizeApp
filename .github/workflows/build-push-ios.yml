@@ -75,4 +75,4 @@ jobs:
           port: 22
           script: mkdir -p /var/www/user_mobtwin/generated/userId/appId/ios
       - name: Transfer iOS Zip to Server
-        run: scp -i ${{ secrets.SSH_PRIVATE_KEY }} -P 22 ./ios_app/ios_app.zip ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/user_mobtwin/generated/userId/appId/ios/
+        run: sudo scp -i ${{ secrets.SSH_PRIVATE_KEY }} -P 22 ./ios_app/ios_app.zip ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/user_mobtwin/generated/userId/appId/ios/

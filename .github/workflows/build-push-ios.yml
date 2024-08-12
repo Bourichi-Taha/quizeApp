@@ -63,7 +63,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ios_app
-          path: ios_app.zip
+          path: ios_app
       - name: Create user folder if not exists
         uses: appleboy/ssh-action@master
         with:
@@ -79,6 +79,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "ios_app.zip"
+          source: "ios_app/ios_app.zip"
           target: "/var/www/user_mobtwin/generated/userId/appId/ios"
 

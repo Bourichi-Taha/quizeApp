@@ -99,6 +99,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-build
           
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Archive APK
         run: zip -r outputs_app.zip android/app/build/outputs
 

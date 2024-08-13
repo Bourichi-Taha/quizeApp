@@ -93,10 +93,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('my-upload-key.keystore')
-            storePassword "Over@@20"
-            keyAlias "my-key-alias"
-            keyPassword "Over@@20"
+            storeFile file(System.getenv("STORE_FILE"))
+            storePassword System.getenv("STORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
         }
         debug {
             storeFile file('debug.keystore')

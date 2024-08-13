@@ -17,7 +17,7 @@ jobs:
           node-version: 18
       - name: Print the variables
         run: |
-          echo "app : ${{ github.event.client_payload.app }}"
+          echo "appData: ${{ toJson(github.event.client_payload.appData) }}"
       - name: Cache Yarn
         id: yarn-cache
         uses: actions/cache@v3

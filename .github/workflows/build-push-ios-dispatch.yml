@@ -15,9 +15,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Print the variables
-        run: |
-          echo "appData: ${{ toJson(github.event.client_payload.appData) }}"
+      - name: Print appData
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const appData = JSON.parse(context.payload.client_payload.appData);
+            console.log('appData:', JSON.stringify(appData, null, 2));
       - name: Cache Yarn
         id: yarn-cache
         uses: actions/cache@v3
